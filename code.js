@@ -50,11 +50,15 @@ function placeChecklist(componentKey, parentNode) {
 }
 function setTemplate() {
     return __awaiter(this, void 0, void 0, function* () {
-        createPages(["3. Build", "2. Create", "1. Discover", "0. Cover"]);
-        yield placeChecklist("6066d7ff57b28a5ccae801a7554954cbfa028f75", figma.root.findChild((n) => n.name === "1. Discover"));
+        const pages = ["3. Build", "2. Create", "1. Discover", "0. Cover"];
+        createPages(pages);
+        // await placeChecklist(
+        //   "6066d7ff57b28a5ccae801a7554954cbfa028f75",
+        //   figma.root.findChild((n) => n.name === "1. Discover")
+        // );
         yield placeChecklist("2c93758ce317da2f9bcd383f2bccdde2285168b2", figma.root.findChild((n) => n.name === "2. Create"));
         yield placeChecklist("e5223211efeb68ca7f3e5756d6f155dd44075f2c", figma.root.findChild((n) => n.name === "3. Build"));
         yield placeCover();
     });
 }
-setTemplate().then((n) => figma.closePlugin());
+setTemplate().then(() => figma.closePlugin());
