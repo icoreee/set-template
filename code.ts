@@ -28,7 +28,7 @@ async function placeCover() {
 
   await figma.loadFontAsync({ family: "Inter", style: "Bold" });
 
-  let fileName = cover.children[1];
+  let fileName = cover.children[1] as TextNode;
 
   fileName.characters = figma.root.name;
 
