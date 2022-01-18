@@ -7,13 +7,13 @@ function createPages(pages) {
 }
 
 async function getCover() {
-  let componentKey = "6d5c8f9f37f810cb772a64fef553b8898ffe4a02";
+  let componentKey = "060e8629b917c619e90c43edb721d03a0ce47543";
   let component = await figma.importComponentByKeyAsync(componentKey);
   return component;
 }
 
 async function placeCover() {
-  let page = figma.root.findChild((n) => n.name === "0. Cover");
+  let page = figma.root.findChild((n) => n.name === "Cover");
   figma.currentPage = page;
 
   let frame = figma.createFrame();
@@ -28,7 +28,9 @@ async function placeCover() {
 
   await figma.loadFontAsync({ family: "Inter", style: "Bold" });
 
-  let fileName = cover.children[1] as TextNode;
+  let fileName = cover.findOne((n) => n.name === "File Name") as TextNode;
+
+  console.log(fileName);
 
   fileName.characters = figma.root.name;
 
@@ -47,20 +49,12 @@ async function placeChecklist(componentKey, parentNode) {
 }
 
 async function setTemplate() {
-  const pages = ["3. Build", "2. Create", "1. Discover", "0. Cover"];
+  const pages = ["Mock-up", "Drafts", "Cover"];
 
   createPages(pages);
-  // await placeChecklist(
-  //   "6066d7ff57b28a5ccae801a7554954cbfa028f75",
-  //   figma.root.findChild((n) => n.name === "1. Discover")
-  // );
   await placeChecklist(
-    "2c93758ce317da2f9bcd383f2bccdde2285168b2",
-    figma.root.findChild((n) => n.name === "2. Create")
-  );
-  await placeChecklist(
-    "e5223211efeb68ca7f3e5756d6f155dd44075f2c",
-    figma.root.findChild((n) => n.name === "3. Build")
+    "147a27a2fb02224fd7006caeaddc02c9153cae76",
+    figma.root.findChild((n) => n.name === "Mock-up")
   );
   await placeCover();
 }

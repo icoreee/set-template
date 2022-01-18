@@ -16,14 +16,14 @@ function createPages(pages) {
 }
 function getCover() {
     return __awaiter(this, void 0, void 0, function* () {
-        let componentKey = "6d5c8f9f37f810cb772a64fef553b8898ffe4a02";
+        let componentKey = "060e8629b917c619e90c43edb721d03a0ce47543";
         let component = yield figma.importComponentByKeyAsync(componentKey);
         return component;
     });
 }
 function placeCover() {
     return __awaiter(this, void 0, void 0, function* () {
-        let page = figma.root.findChild((n) => n.name === "0. Cover");
+        let page = figma.root.findChild((n) => n.name === "Cover");
         figma.currentPage = page;
         let frame = figma.createFrame();
         frame.name = "Cover";
@@ -32,7 +32,8 @@ function placeCover() {
         let cover = coverComponent.createInstance();
         frame.appendChild(cover);
         yield figma.loadFontAsync({ family: "Inter", style: "Bold" });
-        let fileName = cover.children[1];
+        let fileName = cover.findOne((n) => n.name === "File Name");
+        console.log(fileName);
         fileName.characters = figma.root.name;
         frame.resize(cover.width, cover.height);
         const nodes = [];
@@ -50,14 +51,9 @@ function placeChecklist(componentKey, parentNode) {
 }
 function setTemplate() {
     return __awaiter(this, void 0, void 0, function* () {
-        const pages = ["3. Build", "2. Create", "1. Discover", "0. Cover"];
+        const pages = ["Mock-up", "Drafts", "Cover"];
         createPages(pages);
-        // await placeChecklist(
-        //   "6066d7ff57b28a5ccae801a7554954cbfa028f75",
-        //   figma.root.findChild((n) => n.name === "1. Discover")
-        // );
-        yield placeChecklist("2c93758ce317da2f9bcd383f2bccdde2285168b2", figma.root.findChild((n) => n.name === "2. Create"));
-        yield placeChecklist("e5223211efeb68ca7f3e5756d6f155dd44075f2c", figma.root.findChild((n) => n.name === "3. Build"));
+        yield placeChecklist("147a27a2fb02224fd7006caeaddc02c9153cae76", figma.root.findChild((n) => n.name === "Mock-up"));
         yield placeCover();
     });
 }
