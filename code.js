@@ -33,9 +33,9 @@ function placeCover() {
         frame.appendChild(cover);
         yield figma.loadFontAsync({ family: "Inter", style: "Bold" });
         let fileName = cover.findOne((n) => n.name === "File Name");
-        console.log(fileName);
         fileName.characters = figma.root.name;
         frame.resize(cover.width, cover.height);
+        yield figma.setFileThumbnailNodeAsync(frame);
         const nodes = [];
         nodes.push(frame);
         figma.currentPage.selection = nodes;

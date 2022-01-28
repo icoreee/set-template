@@ -30,11 +30,11 @@ async function placeCover() {
 
   let fileName = cover.findOne((n) => n.name === "File Name") as TextNode;
 
-  console.log(fileName);
-
   fileName.characters = figma.root.name;
 
   frame.resize(cover.width, cover.height);
+
+  await figma.setFileThumbnailNodeAsync(frame as FrameNode);
 
   const nodes = [];
   nodes.push(frame);
