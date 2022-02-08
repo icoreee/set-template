@@ -7,12 +7,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+function notifyRandomMeme() {
+    let memes = ["One more things", "Олег, где макет?", "РОКК ЕБОЛ"];
+    let randomNumber = Math.floor(Math.random() * memes.length);
+    figma.notify(memes[randomNumber]);
+}
 function createPages(pages) {
     figma.root.children[0].name = pages[0];
     for (let i = 1; i < pages.length; i++) {
         let page = figma.createPage();
         page.name = pages[i];
     }
+    figma.currentPage = figma.root.findChild((n) => n.name === "Drafts");
 }
 function getCover() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -24,7 +30,6 @@ function getCover() {
 function placeCover() {
     return __awaiter(this, void 0, void 0, function* () {
         let page = figma.root.findChild((n) => n.name === "Cover");
-        figma.currentPage = page;
         let frame = figma.createFrame();
         frame.name = "Cover";
         page.appendChild(frame);
@@ -36,11 +41,6 @@ function placeCover() {
         fileName.characters = figma.root.name;
         frame.resize(cover.width, cover.height);
         yield figma.setFileThumbnailNodeAsync(frame);
-        const nodes = [];
-        nodes.push(frame);
-        figma.currentPage.selection = nodes;
-        figma.viewport.scrollAndZoomIntoView(nodes);
-        return nodes;
     });
 }
 function placeChecklist(componentKey, parentNode) {
@@ -57,4 +57,7 @@ function setTemplate() {
         yield placeCover();
     });
 }
-setTemplate().then(() => figma.closePlugin());
+setTemplate().then(() => {
+    notifyRandomMeme();
+    figma.closePlugin();
+});

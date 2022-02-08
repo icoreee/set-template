@@ -1,9 +1,18 @@
+function notifyRandomMeme() {
+  let memes = ["One more things", "Олег, где макет?", "РОКК ЕБОЛ"];
+
+  let randomNumber = Math.floor(Math.random() * memes.length);
+
+  figma.notify(memes[randomNumber]);
+}
+
 function createPages(pages) {
   figma.root.children[0].name = pages[0];
   for (let i = 1; i < pages.length; i++) {
     let page = figma.createPage();
     page.name = pages[i];
   }
+  figma.currentPage = figma.root.findChild((n) => n.name === "Drafts");
 }
 
 async function getCover() {
@@ -14,7 +23,6 @@ async function getCover() {
 
 async function placeCover() {
   let page = figma.root.findChild((n) => n.name === "Cover");
-  figma.currentPage = page;
 
   let frame = figma.createFrame();
   frame.name = "Cover";
@@ -35,12 +43,6 @@ async function placeCover() {
   frame.resize(cover.width, cover.height);
 
   await figma.setFileThumbnailNodeAsync(frame as FrameNode);
-
-  const nodes = [];
-  nodes.push(frame);
-  figma.currentPage.selection = nodes;
-  figma.viewport.scrollAndZoomIntoView(nodes);
-  return nodes;
 }
 
 async function placeChecklist(componentKey, parentNode) {
@@ -59,4 +61,7 @@ async function setTemplate() {
   await placeCover();
 }
 
-setTemplate().then(() => figma.closePlugin());
+setTemplate().then(() => {
+  notifyRandomMeme();
+  figma.closePlugin();
+});
