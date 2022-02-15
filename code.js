@@ -12,13 +12,17 @@ function notifyRandomMeme() {
     let randomNumber = Math.floor(Math.random() * memes.length);
     figma.notify(memes[randomNumber]);
 }
-function createPages(pages) {
-    figma.root.children[0].name = pages[0];
-    for (let i = 1; i < pages.length; i++) {
-        let page = figma.createPage();
-        page.name = pages[i];
-    }
-    figma.currentPage = figma.root.findChild((n) => n.name === "Drafts");
+function createPage(name, position = undefined) {
+    let page = figma.createPage();
+    page.name = name;
+    if (position != undefined)
+        figma.root.insertChild(position, page);
+}
+function setPages() {
+    if (figma.root.children[0].name === "Page 1")
+        figma.root.children[0].name = "Drafts";
+    createPage("Cover");
+    createPage("Mock-up", 0);
 }
 function getCover() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -43,17 +47,17 @@ function placeCover() {
         yield figma.setFileThumbnailNodeAsync(frame);
     });
 }
-function placeChecklist(componentKey, parentNode) {
+function placeChecklist(componentKey) {
     return __awaiter(this, void 0, void 0, function* () {
+        let page = figma.root.findChild((n) => n.name === "Mock-up");
         let component = yield figma.importComponentByKeyAsync(componentKey);
-        parentNode.appendChild(component.createInstance());
+        page.appendChild(component.createInstance());
     });
 }
 function setTemplate() {
     return __awaiter(this, void 0, void 0, function* () {
-        const pages = ["Mock-up", "Drafts", "Cover"];
-        createPages(pages);
-        yield placeChecklist("147a27a2fb02224fd7006caeaddc02c9153cae76", figma.root.findChild((n) => n.name === "Mock-up"));
+        setPages();
+        yield placeChecklist("147a27a2fb02224fd7006caeaddc02c9153cae76");
         yield placeCover();
     });
 }
