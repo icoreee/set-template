@@ -1,9 +1,9 @@
 function notifyRandomMeme() {
-  let memes = ["One more things", "Олег, где макет?", "РОКК ЕБОЛ"];
+  const MEMES = ["One more things", "Олег, где макет?", "РОКК ЕБОЛ"];
 
-  let randomNumber = Math.floor(Math.random() * memes.length);
+  let randomNumber = Math.floor(Math.random() * MEMES.length);
 
-  figma.notify(memes[randomNumber]);
+  figma.notify(MEMES[randomNumber]);
 }
 
 function createPage(name, position = undefined) {
@@ -22,8 +22,8 @@ function setPages() {
 }
 
 async function getCover() {
-  let componentKey = "060e8629b917c619e90c43edb721d03a0ce47543";
-  let component = await figma.importComponentByKeyAsync(componentKey);
+  const COVER_KEY = "060e8629b917c619e90c43edb721d03a0ce47543";
+  let component = await figma.importComponentByKeyAsync(COVER_KEY);
   return component;
 }
 

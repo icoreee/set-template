@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 function notifyRandomMeme() {
-    let memes = ["One more things", "Олег, где макет?", "РОКК ЕБОЛ"];
-    let randomNumber = Math.floor(Math.random() * memes.length);
-    figma.notify(memes[randomNumber]);
+    const MEMES = ["One more things", "Олег, где макет?", "РОКК ЕБОЛ"];
+    let randomNumber = Math.floor(Math.random() * MEMES.length);
+    figma.notify(MEMES[randomNumber]);
 }
 function createPage(name, position = undefined) {
     let page = figma.createPage();
@@ -26,8 +26,8 @@ function setPages() {
 }
 function getCover() {
     return __awaiter(this, void 0, void 0, function* () {
-        let componentKey = "060e8629b917c619e90c43edb721d03a0ce47543";
-        let component = yield figma.importComponentByKeyAsync(componentKey);
+        const COVER_KEY = "060e8629b917c619e90c43edb721d03a0ce47543";
+        let component = yield figma.importComponentByKeyAsync(COVER_KEY);
         return component;
     });
 }
